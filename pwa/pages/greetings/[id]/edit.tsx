@@ -24,7 +24,7 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({
 };
 
 Page.getInitialProps = async ({ asPath }: NextPageContext) => {
-  const greeting = await fetch(asPath.replace("/edit", ""));
+  const greeting = await fetch(asPath.replace("/edit", "/"));
 
   return { greeting };
 };
