@@ -1,3 +1,1 @@
-console.log(process.env.NEXT_PUBLIC_ENTRYPOINT, window.origin)
-
-export const ENTRYPOINT = window.origin || process.env.NEXT_PUBLIC_ENTRYPOINT;
+export const ENTRYPOINT = typeof window === "undefined" ? (process.env.NEXT_PUBLIC_ENTRYPOINT || "https://localhost") : window.origin;
