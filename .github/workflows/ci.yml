@@ -43,7 +43,7 @@ jobs:
       - name: Install PHPUnit
         run: docker-compose exec -T php composer require -n symfony/test-pack symfony/http-client justinrainbow/json-schema 
       - name: PHPUnit
-        run: docker-compose exec -T php vendor/bin/phpunit tests
+        run: docker-compose exec -T php vendor/bin/phpunit /srv/api/tests
       - name: Doctrine Schema Validator
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php bin/console doctrine:schema:validate --skip-sync
       - name: Jest
