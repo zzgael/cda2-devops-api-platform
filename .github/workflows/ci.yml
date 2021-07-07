@@ -19,7 +19,7 @@ jobs:
       - name: Pull images
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
       - name: Start services
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build --force-recreate -d
       - name: Wait for services
         run: |
           while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do
@@ -40,6 +40,7 @@ jobs:
         run: curl  -vk -o /dev/null https://localhost
       - name: Create test database
         run: |
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php bin/console -e test doctrine:database:create
           docker-compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: PHPUnit
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php bin/phpunit
