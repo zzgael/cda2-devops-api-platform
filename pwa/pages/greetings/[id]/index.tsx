@@ -23,10 +23,14 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({
   );
 };
 
-Page.getInitialProps = async ({ asPath }: NextPageContext) => {
-  const greeting = await fetch(asPath);
+export async function getServerSideProps(context) {
+  const greeting = await fetch(context.resolvedUrl);
 
-  return { greeting };
+  return { 
+    props : {
+      greeting
+    } 
+  };
 };
 
 export default Page;

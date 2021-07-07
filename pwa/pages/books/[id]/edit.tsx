@@ -21,10 +21,14 @@ const Page: NextComponentType<NextPageContext, Props, Props> = ({ book }) => {
   );
 };
 
-Page.getInitialProps = async ({ asPath }: NextPageContext) => {
-  const book = await fetch(asPath.replace("/edit", "/"));
+export async function getServerSideProps(context) {
+  const book = await fetch(context.resolvedUrl.replace("/edit", "/"));
 
-  return { book };
+  return { 
+    props: {
+      book
+    }
+  };
 };
 
 export default Page;
