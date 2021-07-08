@@ -43,7 +43,7 @@ jobs:
       - name: Install PHPUnit
         run: docker-compose exec -T php composer require -n symfony/test-pack symfony/http-client justinrainbow/json-schema 
       - name: ls
-        run: docker-compose exec -T php ls -l 
+        run: docker-compose exec -T php ls -al 
       - name: pwd
         run: docker-compose exec -T php pwd
       - name: PHPUnit
