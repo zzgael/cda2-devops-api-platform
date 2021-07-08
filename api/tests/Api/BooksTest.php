@@ -23,8 +23,6 @@ class BooksTest extends ApiTestCase
                 '@id' => '/books?page=1',
                 '@type' => 'hydra:PartialCollectionView',
                 'hydra:first' => '/books?page=1',
-                'hydra:last' => '/books?page=4',
-                'hydra:next' => '/books?page=2',
             ],
         ]);
 
