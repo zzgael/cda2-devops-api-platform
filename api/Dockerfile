@@ -97,6 +97,7 @@ COPY templates templates/
 COPY fixtures fixtures/
 COPY tests tests/
 COPY phpunit.xml.dist phpunit.xml.dist/
+COPY .env.test .env.test/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
