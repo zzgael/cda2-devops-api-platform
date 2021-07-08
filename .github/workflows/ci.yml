@@ -56,5 +56,5 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with: 
-          token: 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
+          token: ${{ secrets.ACCESS_TOKEN }}
           branch: master
