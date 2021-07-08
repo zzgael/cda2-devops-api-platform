@@ -16,12 +16,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: stop and remove previous containers
-        run: docker-compose stop && docker-compose rm
       - name: Pull images
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
       - name: Start services
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --force-recreate --build -d
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
       - name: Wait for services
         run: |
           while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do

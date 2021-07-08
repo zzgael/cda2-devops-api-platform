@@ -94,6 +94,8 @@ COPY migrations migrations/
 COPY public public/
 COPY src src/
 COPY templates templates/
+COPY fixtures fixtures/
+COPY tests tests/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
