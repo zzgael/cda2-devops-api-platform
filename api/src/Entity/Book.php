@@ -10,8 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=BookRepository::class)
  */
 #[ApiResource]
-class Book
-{
+class Book {
+
+
+
+
+
+
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

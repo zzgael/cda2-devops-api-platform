@@ -16,46 +16,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Pull images
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
-      - name: Start services
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
-      - name: Wait for services
-        run: |
-          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do
-            case $status in
-              starting) sleep 1;;
-              healthy) exit 0;;
-              unhealthy)
-                docker-compose ps
-                docker-compose logs
-                exit 1
-              ;;
-            esac
-          done
-          exit 1
-      - name: Check HTTP reachability
-        run: curl -v -o /dev/null http://localhost
-      - name: Check HTTPS reachability
-        run: curl  -vk -o /dev/null https://localhost
-      - name: Migrate
-        run: docker-compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
-      - name: Install PHPUnit
-        run: docker-compose exec -T php composer require -n symfony/test-pack symfony/http-client justinrainbow/json-schema 
-      - name: ls
-        run: docker-compose exec -T php ls -al 
-      - name: pwd
-        run: docker-compose exec -T php pwd
-      - name: PHPUnit
-        run: docker-compose exec -T php vendor/bin/phpunit /srv/api/tests
-      - name: Doctrine Schema Validator
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php bin/console doctrine:schema:validate --skip-sync
-      - name: Jest
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test --ci --passWithNoTests
-      - name: Auto Merge
-        id: cpr
-        uses: peter-evans/create-pull-request@v3
-        with: 
-          token: ${{ secrets.ACCESS_TOKEN }}
-          branch: master
-          base: main
+      - name: 
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: 9KhpzKDOtxiC99mau2nW5Zwl # Required
+          github-token: ${{ secrets.ACCESS_TOKEN }} #Optional 
+          vercel-org-id: NL9xTmf3lB6rGO4iKRevnxg8  #Required
+          vercel-project-id: prj_JtfKUFmunwEIalUny3MZIvVnpwBJ #Required 
+          working-directory: ./pwa
